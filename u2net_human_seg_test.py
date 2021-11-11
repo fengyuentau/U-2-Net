@@ -94,13 +94,15 @@ def main():
 
         inputs_test = data_test['image']
         inputs_test = inputs_test.type(torch.FloatTensor)
+        print(inputs_test.shape)
 
         if torch.cuda.is_available():
             inputs_test = Variable(inputs_test.cuda())
         else:
             inputs_test = Variable(inputs_test)
 
-        d1,d2,d3,d4,d5,d6,d7= net(inputs_test)
+        d1 = net(inputs_test)
+        print(d1.shape)
 
         # normalization
         pred = d1[:,0,:,:]
@@ -111,7 +113,7 @@ def main():
             os.makedirs(prediction_dir, exist_ok=True)
         save_output(img_name_list[i_test],pred,prediction_dir)
 
-        del d1,d2,d3,d4,d5,d6,d7
+        del d1
 
 if __name__ == "__main__":
     main()
